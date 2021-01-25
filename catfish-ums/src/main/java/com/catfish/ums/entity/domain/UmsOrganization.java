@@ -1,12 +1,15 @@
 package com.catfish.ums.entity.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * <p>
@@ -45,5 +48,11 @@ public class UmsOrganization implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    /**
+     * 子组织
+     */
+    @Transient
+    private List<UmsOrganization> children = new ArrayList<>();
 
 }
