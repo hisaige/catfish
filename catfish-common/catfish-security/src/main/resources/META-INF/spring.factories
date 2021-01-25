@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.catfish.common.security.config.SecurityAutoConfiguration

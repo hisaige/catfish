@@ -1,0 +1,5 @@
+server:
+  servlet:
+    context-path: /UMS
+  port: 5601
+

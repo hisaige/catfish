@@ -1,0 +1,12 @@
+aliyun:
+  oss:
+    file:
+      bucket-name: catfish01
+      key-id: key-id
+      endpoint: endpoint
+      key-secret: key-secret
+
+server:
+  port: 5501
+  servlet:
+    context-path: /FILE
