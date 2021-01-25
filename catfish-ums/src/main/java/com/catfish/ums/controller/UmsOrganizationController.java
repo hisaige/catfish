@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 import com.hisaige.dbcore.controller.BaseController;
-import com.catfish.ums.entity.UmsOrganization;
+import com.catfish.ums.entity.domain.UmsOrganization;
 import com.catfish.ums.service.impl.UmsOrganizationServiceImpl;
 
 /**

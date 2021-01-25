@@ -1,6 +1,6 @@
 package com.catfish.ums.service;
 
-import com.catfish.ums.entity.UmsOrganization;
+import com.catfish.ums.entity.domain.UmsOrganization;
 import com.hisaige.dbcore.service.BaseService;
 
 /**
@@ -11,6 +11,6 @@ import com.hisaige.dbcore.service.BaseService;
  * @author chenyj
  * @since 2021-01-25
  */
-public interface IUmsOrganizationService extends BaseService<UmsOrganization> {
+public interface UmsOrganizationService extends BaseService<UmsOrganization> {
 
 }

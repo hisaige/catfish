@@ -1,6 +1,6 @@
 package com.catfish.ums.mapper;
 
-import com.catfish.ums.entity.UmsOrganization;
+import com.catfish.ums.entity.domain.UmsOrganization;
 import com.hisaige.dbcore.mapper.BaseMapper;
 
 /**

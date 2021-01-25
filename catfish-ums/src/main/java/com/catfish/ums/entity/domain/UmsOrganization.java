@@ -1,11 +1,11 @@
-package com.catfish.ums.entity;
+package com.catfish.ums.entity.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
+
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -25,20 +25,25 @@ public class UmsOrganization implements Serializable {
     /**
      * 组织id，这里用数字当作id主要是为了方便ancestors字段
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id
     private Long id;
 
     private String orgName;
 
     private String orgCode;
 
+    /**
+     * 父组织id
+     */
     private Long orgPid;
 
+    /**
+     * 父组织id集合
+     */
     private String ancestors;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
-    private LocalDateTime updateTime;
-
+    private Date updateTime;
 
 }

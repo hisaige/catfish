@@ -1,8 +1,8 @@
 package com.catfish.ums.service.impl;
 
-import com.catfish.ums.entity.UmsOrganization;
+import com.catfish.ums.entity.domain.UmsOrganization;
 import com.catfish.ums.mapper.UmsOrganizationMapper;
-import com.catfish.ums.service.IUmsOrganizationService;
+import com.catfish.ums.service.UmsOrganizationService;
 import com.hisaige.dbcore.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-01-25
  */
 @Service
-public class UmsOrganizationServiceImpl extends BaseServiceImpl<UmsOrganizationMapper, UmsOrganization> implements IUmsOrganizationService {
+public class UmsOrganizationServiceImpl extends BaseServiceImpl<UmsOrganizationMapper, UmsOrganization> implements UmsOrganizationService {
 
 }
