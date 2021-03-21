@@ -1,0 +1,2 @@
+# 运行jar
+nohup java -jar -Xms128m -Xmx128m catfish-file-1.0.0.jar > /dev/null 2>&1 &

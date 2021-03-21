@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>hisaige</groupId>
+    <artifactId>catfish-hisaige</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>hisaige-clould</name>
+    <description>catfish-parent</description>
+    <modules>
+
+        <module>catfish-common</module>
+        <module>catfish-gateway</module>
+        <module>catfish-event</module>
+        <module>catfish-ums</module>
+        <module>catfish-job</module>
+        <module>catfish-blog</module>
+        <module>catfish-log</module>
+        <module>catfish-system</module>
+        <module>catfish-admin</module>
+    </modules>
+
+    <properties>
+        <catfish.version>1.0.0</catfish.version>
+		<hisaige-version>1.0.0</hisaige-version>
+		<javax.persistence.version>1.0</javax.persistence.version>
+		<spring-boot.version>2.3.4.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+		<spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <jjwt.version>0.9.0</jjwt.version>
+        <hutool.version>4.5.7</hutool.version>
+        <hutool.version>4.5.7</hutool.version>
+
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <skipTests>true</skipTests>
+
+    </properties>
+
+    <!-- 在这里声明所有子模块， 子模块之间引用时可不用写版本号 -->
+    <dependencyManagement>
+        <dependencies>
+            <!--哈撒给版本声明-->
+            <dependency>
+                <groupId>hisaige</groupId>
+                <artifactId>jar-hisaige-dependencies</artifactId>
+                <version>${hisaige-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+			
+			<!--springboot版本声明-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringCloud springframework 微服务 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+			
+			<!-- SpringCloud Alibaba 微服务 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>hisaige</groupId>
+                <artifactId>catfish-security</artifactId>
+                <version>${catfish.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hisaige</groupId>
+                <artifactId>catfish-core</artifactId>
+                <version>${catfish.version}</version>
+            </dependency>
+
+            <!--JWT-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+
+            <!--糊涂 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!--持久化工具类 -->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${javax.persistence.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>    <!--默认关掉单元测试  全部批量打包用这个-->
+                </configuration>
+            </plugin>
+            <!--<plugin>-->
+            <!--&lt;!&ndash;关掉单元测试 -<skipTests>true</skipTests>  单个应用模块打包用这个&ndash;&gt;-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--<configuration>-->
+            <!--<fork>true</fork>-->
+            <!--<addResources>true</addResources>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+</project>
