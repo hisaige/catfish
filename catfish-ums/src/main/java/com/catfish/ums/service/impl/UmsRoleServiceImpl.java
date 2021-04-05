@@ -11,6 +11,7 @@ import com.catfish.ums.service.UmsRoleMenuService;
 import com.catfish.ums.service.UmsRolePermissionService;
 import com.catfish.ums.service.UmsRoleService;
 import com.catfish.common.security.entity.model.UmsPermission;
+import com.hisaige.dbcore.entity.dto.PageReq;
 import com.hisaige.dbcore.service.impl.BaseServiceImpl;
 import com.hisaige.web.core.entity.enums.ReturnCodeEnum;
 import com.hisaige.web.core.exception.InvalidException;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -127,4 +129,10 @@ public class UmsRoleServiceImpl extends BaseServiceImpl<UmsRoleMapper, UmsRole> 
         return umsMenuService.getByIds(umsRoleMenuIds);
     }
 
+    @Override
+    public List<UmsRole> getByProvider(PageReq pageDTO, UmsRole record) throws Exception {
+        List<UmsRole> umsRole = super.getByProvider(pageDTO, record);
+        Collections.sort(umsRole);
+        return umsRole;
+    }
 }

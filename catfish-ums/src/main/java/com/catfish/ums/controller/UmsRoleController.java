@@ -65,5 +65,4 @@ public class UmsRoleController extends BaseController<UmsRoleService, UmsRole> {
         return new AjaxMessageRes<>(umsRoleService.getRoleMenus(roleId));
     }
 
-
 }

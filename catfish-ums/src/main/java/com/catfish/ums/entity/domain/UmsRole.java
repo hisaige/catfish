@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "ums_role")
-public class UmsRole implements Serializable {
+public class UmsRole implements Serializable, Comparable<UmsRole> {
 
     @Id
     @KeySql(genId = UUIDGenId.class)
@@ -107,5 +107,13 @@ public class UmsRole implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(UmsRole o) {
+        if(null == this.getSort() || null == o || null == o.getSort()) {
+            return 0;
+        }
+        return this.getSort().compareTo(o.getSort());
     }
 }

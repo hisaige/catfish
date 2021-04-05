@@ -549,7 +549,7 @@ export default {
     handleCreate() {
       const orgId = this.listQuery.orgId
       const orgName = this.orgName
-      if (undefined == orgId) {
+      if (undefined === orgId) {
         this.$message({
           message: '请选择组织',
           type: 'error'

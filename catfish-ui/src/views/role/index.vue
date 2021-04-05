@@ -96,6 +96,16 @@
         </el-table-column>
 
         <el-table-column
+          align="center"
+          label="排序"
+          width="60"
+        >
+          <template slot-scope="{row}">
+            <span>{{ row.sort }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
           label="状态"
           align="center"
           width="80"
@@ -148,6 +158,73 @@
         :limit.sync="listQuery.limit"
         @pagination="getList"
       />
+
+      <!-- 编辑弹窗 -->
+      <el-dialog
+        v-loading="dialogLoading"
+        :title="'编辑'"
+        :visible.sync="dialogFormVisible"
+      >
+        <el-form
+          ref="dataForm"
+          :model="temp"
+          label-position="left"
+          label-width="80px"
+          style="width: 400px; margin-left:120px;"
+        >
+          <el-form-item
+            label="角色名称"
+            prop="name"
+          >
+            <el-input v-model="temp.name" />
+          </el-form-item>
+
+          <el-form-item
+            label="角色编码"
+            prop="roleCode"
+          >
+            <el-input v-model="temp.roleCode" />
+          </el-form-item>
+
+          <el-form-item
+            label="角色描述"
+            prop="description"
+          >
+            <el-input v-model="temp.description" />
+          </el-form-item>
+
+          <el-form-item
+            label="排序"
+            prop="sort"
+          >
+            <el-input-number v-model="temp.sort" :step="1" size="mini" />
+          </el-form-item>
+
+          <el-form-item label="启用状态">
+            <el-select
+              v-model="temp.status"
+              class="filter-item"
+              placeholder="请选择"
+            >
+              <el-option
+                v-for="item in statusOptions"
+                :key="item.enable"
+                :label="item.label"
+                :value="item.enable"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button
+              type="primary"
+              :loading="editLoading"
+              @click="addOrUpdate('dataForm')"
+            >{{ addOrUpdateBtn }}</el-button>
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -156,6 +233,7 @@
 import { fetchPage, addRole, editRole, deleteRole } from '@/api/ums/role'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // 分页插件
+import { updateRole } from '@/api/role'
 
 export default {
   name: 'UserIndex',
@@ -177,12 +255,14 @@ export default {
   data() {
     return {
       downloadLoading: false,
+      dialogFormVisible: false, // 编辑弹窗
       dialogLoading: 0,
       listLoading: false,
       editLoading: false,
       tableKey: 0,
       list: null,
       total: 0,
+      addOrUpdateBtn: '新增', // 新增|更新 按钮文字
       listQuery: {
         pageNum: 1,
         pageSize: 20,
@@ -191,6 +271,14 @@ export default {
         email: undefined,
         status: undefined,
         orgId: undefined
+      },
+      tempSort: 0,
+      temp: {
+        name: undefined,
+        roleCode: undefined,
+        description: undefined,
+        sort: 0,
+        status: 1
       },
       statusOptions: [
         { enable: 1, label: '启用' },
@@ -207,13 +295,25 @@ export default {
       this.getList()
     },
     handleCreate() {
+      this.addOrUpdateBtn = '新增'
 
+      this.clearTemp()
+
+      this.dialogFormVisible = true
+    },
+    clearTemp() {
+      // 清空 对象熟悉回到默认值
+      this.name = undefined
+      this.roleCode = undefined
+      this.temp.status = 1
+      this.temp.sort = 0
     },
     handleEdit(row) {
       // 点击编辑按钮
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      // this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
+      this.addOrUpdateBtn = '编辑'
       this.dialogFormVisible = true
     },
     handleDownload() {},
@@ -230,6 +330,52 @@ export default {
       if (prop === 'id') {
         this.sortByID(order)
       }
+    },
+    addOrUpdate(formName) {
+      // 处理新增或更新
+      const that = this
+      this.editLoading = true
+      if (this.addOrUpdateBtn === '新增') {
+        addRole(this.temp)
+          .then((response) => {
+            this.$message({
+              message: response.desc,
+              type: 'success'
+            })
+            that.getList()
+          })
+          .finally(() => {
+            that.editLoading = false
+            that.dialogFormVisible = false
+          })
+      } else {
+        editRole(this.temp)
+          .then((response) => {
+            this.$message({
+              message: response.desc,
+              type: 'success'
+            })
+            that.getList()
+          })
+          .finally(() => {
+            that.editLoading = false
+            that.dialogFormVisible = false
+          })
+      }
+    },
+    handleDelete(row, index) {
+      this.listLoading = true
+      deleteRole(row.id).then((response) => {
+        // Just to simulate the time of the request
+        this.$notify({
+          title: 'Success',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.list.splice(index, 1)
+        this.listLoading = false
+      })
     }
   }
 }

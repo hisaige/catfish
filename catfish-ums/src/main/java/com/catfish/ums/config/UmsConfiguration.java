@@ -3,6 +3,7 @@ package com.catfish.ums.config;
 import com.catfish.common.security.config.properties.SecurityProperties;
 import com.catfish.common.security.filter.JwtTokenFilter;
 import com.catfish.common.security.util.JwtTokenManager;
+import com.hisaige.web.core.configuration.mvc.EmptyStringToNullResolveProcessor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,5 +38,14 @@ public class UmsConfiguration {
     @Bean
     public JwtTokenFilter jwtTokenFilter() {
         return new JwtTokenFilter(jwtTokenUtils, securityProperties);
+    }
+
+    /**
+     * SpringMVC参数处理器 将空字符串转化为null
+     * @return EmptyStringToNullResolveRegister
+     */
+    @Bean
+    public EmptyStringToNullResolveProcessor emptyStringToNullResolveProcessor() {
+        return new EmptyStringToNullResolveProcessor(true);
     }
 }
