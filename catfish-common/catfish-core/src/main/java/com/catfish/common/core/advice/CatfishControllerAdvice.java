@@ -28,6 +28,17 @@ public class CatfishControllerAdvice {
     }
 
     @ResponseBody
+    @ExceptionHandler(Exception.class)
+    public AjaxExceptionRes handleRepeatLimitException(Exception e) {
+        if(e instanceof InvalidException) {
+            return R.fail(e);
+        } else {
+            //如果不是校验异常则返回系统异常提示
+            return R.fail(new InvalidException(ReturnCodeEnum.SERVER_EXCEPTION));
+        }
+    }
+
+    @ResponseBody
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public AjaxExceptionRes handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
         String message = e.getMessage();

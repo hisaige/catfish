@@ -3,7 +3,10 @@
     v-loading="loading"
     class="area-manage page-container"
   >
-    <el-aside v-show="isShowTree" width="250px">
+    <el-aside
+      v-show="isShowTree"
+      width="250px"
+    >
 
       <el-input
         v-model="orgFilterText"
@@ -78,7 +81,13 @@
           label="排序"
           prop="sort"
         >
-          <el-input-number v-model="temp.sort" :min="1" :max="10" label="排序" @change="handleSortChange" />
+          <el-input-number
+            v-model="temp.sort"
+            :min="1"
+            :max="10"
+            label="排序"
+            @change="handleSortChange"
+          />
         </el-form-item>
         <el-form-item>
           <el-button
@@ -442,31 +451,30 @@ aside {
 } */
 
 /* 组织树右键菜单样式 */
-.tree_menu{
+.tree_menu {
   position: fixed;
   display: block;
   z-index: 20000;
   background-color: #fff;
-  padding:5px 0;
+  padding: 5px 0;
   border: 1px solid #ebeef5;
   border-radius: 4px;
-  box-shadow:0 2px 12px 0 rgba(0,0,0,.1);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
-ul{
-  margin:0;
-  padding:0;
+ul {
+  margin: 0;
+  padding: 0;
 }
-ul li{
+ul li {
   list-style: none;
-  margin:0;
+  margin: 0;
   padding: 0 16px 0 8px;
   font-size: 14px;
   line-height: 30px;
   cursor: pointer;
 }
-ul li:hover{
-  background-color: #ebeef5
+ul li:hover {
+  background-color: #ebeef5;
 }
-
 </style>

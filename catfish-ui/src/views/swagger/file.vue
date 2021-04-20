@@ -1,6 +1,6 @@
 <template>
   <iframe v-if="$route.query.src" ref="iframe" v-loading.fullscreen.lock="fullscreenLoading" :src="$route.query.src" class="iframe" />
-  <iframe v-else ref="iframe" v-loading.fullscreen.lock="fullscreenLoading" src="http://127.0.0.1/catfish/FILE/swagger-ui.html" class="iframe" />
+  <iframe v-else ref="iframe" v-loading.fullscreen.lock="fullscreenLoading" src="http://81.69.57.41/catfish/FILE/swagger-ui.html" class="iframe" />
 </template>
 
 <script>

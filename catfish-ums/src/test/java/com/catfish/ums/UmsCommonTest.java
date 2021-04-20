@@ -14,7 +14,7 @@ public class UmsCommonTest {
     private DataSourceConfig getDataSourceConfig(){
 
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3336/catfish_cloud?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://81.69.57.41:3336/catfish_cloud?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
         // dsc.setSchemaName("public");
 //        dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");

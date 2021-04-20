@@ -1,20 +1,33 @@
 package com.catfish.common.security.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hisaige.dbcore.support.UUIDGenId;
+import com.hisaige.web.core.valid.EditGroup;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
+/**
+ * 用户权限表实体类
+ */
 @Table(name = "ums_permission")
 @JsonInclude(JsonInclude.Include.NON_NULL) //为空的字段不返回
+@Getter
+@Setter
+@ToString
 public class UmsPermission implements Serializable {
 
     @Id
+    @NotNull(message = "msg.id.notnull", groups = {EditGroup.class})
+    @KeySql(genId = UUIDGenId.class)
     private String id;
 
     @ApiModelProperty(value = "父级ID")
@@ -29,6 +42,21 @@ public class UmsPermission implements Serializable {
     @ApiModelProperty(value = "描述")
     private String description;
 
+    @ApiModelProperty(value = "权限类型 0-目录，1-菜单，2-按钮")
+    private Integer type;
+
+    @ApiModelProperty(value = "权限标识")
+    private String perms;
+
+    @ApiModelProperty(value = "启用状态 true-启用")
+    private Boolean status;
+
+    @ApiModelProperty(value = "权限图标")
+    private String icon;
+
+    @ApiModelProperty(value = "是否是系统生成的，true表示是，不能删除")
+    private Boolean isSystem;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -37,72 +65,4 @@ public class UmsPermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "UmsPermission{" +
-                "id='" + id + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", description='" + description + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
-    }
 }

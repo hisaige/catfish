@@ -141,6 +141,15 @@ export const asyncRoutes = [
     },
     children: [
       {
+        path: 'list',
+        component: () => import('@/views/permission/list'),
+        name: 'ListPermission',
+        meta: {
+          title: '权限管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
         path: 'page',
         component: () => import('@/views/permission/page'),
         name: 'PagePermission',

@@ -13,4 +13,21 @@ import java.util.List;
 public interface UmsPermissionService extends BaseService<UmsPermission> {
     void checkPermissionIds(List<String> ids, List<UmsPermission> retPermissions) throws InvalidException;
     List<UmsPermission> getByRoleIds(Iterable<String> roleIds) throws Exception;
+
+    List<UmsPermission> getRoot();
+
+    /**
+     * 根据父节点ID获取
+     * @param parentId 父节点id
+     * @return List<UmsPermission>
+     */
+    List<UmsPermission> getByParentId(String parentId);
+
+    /**
+     * 根据条件过滤权限
+     * @param name 权限名称
+     * @param status 状态 禁用/启用
+     * @return List<UmsPermission>
+     */
+    List<UmsPermission> filter(String name, Boolean status);
 }
