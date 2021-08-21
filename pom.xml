@@ -21,6 +21,7 @@
         <module>catfish-log</module>
         <module>catfish-system</module>
         <module>catfish-admin</module>
+        <module>catfish-test</module>
     </modules>
 
     <properties>

@@ -42,7 +42,6 @@ public class UmsPermissionServiceImpl extends BaseServiceImpl<UmsPermissionMappe
         return super.getByIds(permissionIds);
     }
 
-
     @Override
     public void checkPermissionIds(List<String> ids, List<UmsPermission> retPermissions) throws InvalidException {
         if (CollectionUtils.isEmpty(retPermissions)) {

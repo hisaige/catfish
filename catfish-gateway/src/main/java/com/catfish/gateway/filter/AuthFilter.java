@@ -1,13 +1,12 @@
 package com.catfish.gateway.filter;
 
-import com.alibaba.fastjson.JSON;
 import com.catfish.common.core.entity.CatfishConstants;
 import com.catfish.common.security.access.UmsUserDetails;
-import com.catfish.common.security.util.JwtTokenManager;
 import com.catfish.common.security.config.properties.SecurityProperties;
 import com.catfish.common.security.entity.model.UmsUser;
+import com.catfish.common.security.util.JwtTokenManager;
+import com.catfish.gateway.util.MonoUtils;
 import com.hisaige.redis.service.RedisService;
-import com.hisaige.web.core.entity.domain.R;
 import com.hisaige.web.core.entity.enums.ReturnCodeEnum;
 import com.hisaige.web.core.util.StringUtils;
 import org.slf4j.Logger;
@@ -16,11 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -65,14 +60,14 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String token = getToken(request);
 
         if(StringUtils.isEmpty(token)) {
-            return unauthorizedResponse(exchange, ReturnCodeEnum.TOKEN_EMPTY);
+            return MonoUtils.writeResponse(exchange, ReturnCodeEnum.TOKEN_EMPTY);
         }
 
         UmsUserDetails umsUserDetails = redisService.get(CatfishConstants.TOKEN_HEAD + token);
         UmsUser umsUser;
         if(null == umsUserDetails || null == (umsUser=umsUserDetails.getRetUser())) {
             //redis中不存在则鉴权失败
-            return unauthorizedResponse(exchange, ReturnCodeEnum.AUTHENTICATION_FAILED);
+            return MonoUtils.writeResponse(exchange, ReturnCodeEnum.AUTHENTICATION_FAILED);
         } else {
             //刷新缓存
             umsUserDetails.setLastAccessTime(new Date());
@@ -118,18 +113,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return Ordered.LOWEST_PRECEDENCE;
-    }
-
-    private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, ReturnCodeEnum returnCodeEnum)
-    {
-        ServerHttpResponse response = exchange.getResponse();
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        response.setStatusCode(HttpStatus.OK);
-
-        return response.writeWith(Mono.fromSupplier(() -> {
-            DataBufferFactory bufferFactory = response.bufferFactory();
-            return bufferFactory.wrap(JSON.toJSONBytes(R.fail(returnCodeEnum)));
-        }));
     }
 
 }

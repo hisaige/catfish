@@ -1,31 +1,24 @@
 # Spring
 spring:
   application:
-    name: catfish-gateway
+    name: catfish-test
   profiles:
     # 环境配置
     active: dev
-  main:
-    allow-bean-definition-overriding: true
   cloud:
     nacos:
       discovery:
-        # 服务注册地址 @NACOS_SERVER@ pom方式
+        # 服务注册地址
         server-addr: ${NACOS_SERVER}
       config:
         # 配置中心地址
         server-addr: ${NACOS_SERVER}
         # 配置文件格式
         file-extension: yml
+        # 共享配置,共享配置作为默认配置的补充，保存公共配置，应用配置文件的dataId为：${spring.application}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
         group: CATFISH_GROUP
-        # 共享配置
         sharedConfigs:
           - dataId: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-            # 使用默认分组
-            group: CATFISH_GROUP
-            # 动态刷新
-            refresh: true
-          - dataId: application-datasource-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
             # 使用默认分组
             group: CATFISH_GROUP
             # 动态刷新

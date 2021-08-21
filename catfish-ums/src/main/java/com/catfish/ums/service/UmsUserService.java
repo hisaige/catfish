@@ -41,7 +41,7 @@ public interface UmsUserService extends BaseService<UmsUser> {
      * @return 激活条数
      * @throws InvalidException 验证异常
      */
-    int addResources(String userId, List<String> resourceIds) throws Exception;
+    int addResources(String userId, List<Long> resourceIds) throws Exception;
 
     int addPermissions(String userId, List<String> permissionIds, Boolean status) throws Exception;
 

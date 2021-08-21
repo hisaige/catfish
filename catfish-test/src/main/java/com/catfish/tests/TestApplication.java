@@ -1,24 +1,21 @@
-package com.catfish.ums;
+package com.catfish.tests;
 
-import com.hisaige.dbcore.annotation.EnableCoreDatabase;
-import com.hisaige.i18n.annotation.EnableI18n;
-import com.hisaige.redis.annotation.EnableRedisCache;
 import com.hisaige.swagger.annotation.EnableSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author chenyj
- * 2020/12/16 - 22:03.
+ * 2021/7/8 - 10:59.
  **/
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-@EnableCoreDatabase(basePackages = "com.catfish.ums.mapper")
-@EnableI18n
+@EnableDiscoveryClient
 @EnableSwagger
-@EnableRedisCache
-public class AuthApplication {
+public class TestApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
+        SpringApplication.run(TestApplication.class, args);
     }
 }

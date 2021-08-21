@@ -1,7 +1,7 @@
 package com.catfish.common.file.controller;
 
 import com.catfish.common.file.service.FileService;
-import com.catfish.common.core.entity.domain.AjaxMessageRes;
+import com.hisaige.web.core.entity.domain.AjaxMessageRes;
 import com.hisaige.web.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

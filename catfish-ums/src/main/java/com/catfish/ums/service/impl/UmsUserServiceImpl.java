@@ -3,8 +3,10 @@ package com.catfish.ums.service.impl;
 import cn.hutool.core.lang.Assert;
 import com.catfish.common.core.entity.CatfishConstants;
 import com.catfish.common.security.access.UmsUserDetails;
+import com.catfish.common.security.entity.model.UmsPermission;
+import com.catfish.common.security.entity.model.UmsUser;
+import com.catfish.common.security.util.JwtTokenManager;
 import com.catfish.common.security.util.SystemUserUtils;
-import com.catfish.ums.entity.domain.UmsOrganization;
 import com.catfish.ums.entity.domain.UmsResource;
 import com.catfish.ums.entity.domain.UmsRole;
 import com.catfish.ums.entity.domain.UmsUserPermission;
@@ -23,11 +25,7 @@ import com.catfish.ums.service.UmsUserPermissionService;
 import com.catfish.ums.service.UmsUserResourceService;
 import com.catfish.ums.service.UmsUserRoleService;
 import com.catfish.ums.service.UmsUserService;
-import com.catfish.common.security.entity.model.UmsPermission;
-import com.catfish.common.security.entity.model.UmsUser;
-import com.catfish.common.security.util.JwtTokenManager;
 import com.hisaige.dbcore.entity.dto.PageReq;
-import com.hisaige.dbcore.entity.dto.TimeSearchDTO;
 import com.hisaige.dbcore.service.impl.BaseServiceImpl;
 import com.hisaige.i18n.locale.LocaleMessage;
 import com.hisaige.redis.service.RedisService;
@@ -46,7 +44,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.comparator.Comparators;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,9 +99,6 @@ public class UmsUserServiceImpl extends BaseServiceImpl<UmsUserMapper, UmsUser> 
     @Autowired
     private RedisService<UmsUserDetails> redisService;
 
-    @Autowired
-    private UserDetail2LoginUserMapStruct userDetail2LoginUserMapStruct;
-
     @Override
     public UserInfo getUserInfo() throws Exception {
         UserInfo userInfo = new UserInfo();
@@ -159,7 +153,7 @@ public class UmsUserServiceImpl extends BaseServiceImpl<UmsUserMapper, UmsUser> 
     }
 
     @Override
-    public int addResources(String userId, List<String> resourceIds) throws Exception {
+    public int addResources(String userId, List<Long> resourceIds) throws Exception {
         if (null == userId || !mapper.existsWithPrimaryKey(userId)) { //用户必须存在
             log.warn("user not exist, userId:{}", userId);
             throw new InvalidException(ReturnCodeEnum.USER_NOT_EXIST);
@@ -386,7 +380,7 @@ public class UmsUserServiceImpl extends BaseServiceImpl<UmsUserMapper, UmsUser> 
                 }
             }
         }
-        return userDetail2LoginUserMapStruct.toDto(retList);
+        return UserDetail2LoginUserMapStruct.INSTANCE.toDto(retList);
     }
 
     @Override
